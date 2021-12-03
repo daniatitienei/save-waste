@@ -1,4 +1,4 @@
-package com.rozatorii_bulbucasi.savewaste.ui.theme
+package com.rozatorii_bulbucasi.savewaste.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

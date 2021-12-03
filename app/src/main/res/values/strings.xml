@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Save waste</string>
+    <string name="home">Home</string>
+    <string name="maps">Maps</string>
+    <string name="total_waste_recycled_by_our_users">Total waste recycled by our users:</string>
+    <string name="waste">waste</string>
+    <string name="faq" translatable="false">F.A.Q</string>
+    <string name="why_you_should_recycle_question">Why you should recycle?</string>
+    <string name="why_you_should_recycle_answer">Because recycling saves resources, prevents pollution, supports public health, and creates jobs. It saves money, avoids landfills, and best of all, it\'s easy.</string>
+    <string name="how_to_separate_the_items_for_recycling_question">How to separate the items for recycling?</string>
+    <string name="how_to_separate_the_items_for_recycling_answer">The easiest way to separate/prepare your recyclable items is to try and handle things as soon as possible. Set up space in your house where you are going to compile your different plastic and paper-based recyclables, and as soon as you come across something that fits the bill, move it over.</string>
+    <string name="categories">Categories</string>
+    <string name="paper">Paper</string>
 </resources>

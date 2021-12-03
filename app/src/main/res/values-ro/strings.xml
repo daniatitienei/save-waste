@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Save waste</string>
+    <string name="home">Acasă</string>
+    <string name="maps">Hărți</string>
+    <string name="total_waste_recycled_by_our_users">Totalul deseurilor reciclate de utilizatorii nostrii:</string>
+    <string name="waste">deseuri</string>
+    <string name="why_you_should_recycle_question">De ce ar trebui sa reciclezi?</string>
+    <string name="why_you_should_recycle_answer">Pentru că reciclarea economisește resurse, previne poluarea, susține sănătatea publică și creează locuri de muncă. Economisește bani, evită gropile de gunoi și, cel mai bine, este ușor.</string>
+    <string name="how_to_separate_the_items_for_recycling_question">Cum să separați obiectele pentru reciclare?</string>
+    <string name="how_to_separate_the_items_for_recycling_answer">Cel mai simplu mod de a vă separa/pregăti articolele reciclabile este să încercați să gestionați lucrurile cât mai curând posibil. Pregătiți spațiu în casa dvs. unde veți compila diferitele materiale reciclabile pe bază de plastic și hârtie și, de îndată ce găsiți ceva care se potrivește, mutați-l.</string>
+    <string name="categories">Categorii</string>
+    <string name="paper">Hârtie</string>
+</resources>
