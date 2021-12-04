@@ -1,11 +1,9 @@
 package com.rozatorii_bulbucasi.savewaste.data.di
 
-import android.app.Application
-import com.rozatorii_bulbucasi.savewaste.SaveWasteApplication
 import com.rozatorii_bulbucasi.savewaste.data.remote.WasteCategoriesApi
 import com.rozatorii_bulbucasi.savewaste.data.repository.WasteCategoriesRepositoryImpl
 import com.rozatorii_bulbucasi.savewaste.domain.repository.WasteCategoriesRepository
-import com.rozatorii_bulbucasi.savewaste.utils.Common
+import com.rozatorii_bulbucasi.savewaste.data.common.Common
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

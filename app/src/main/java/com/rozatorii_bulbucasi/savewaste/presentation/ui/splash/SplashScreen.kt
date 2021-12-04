@@ -1,6 +1,5 @@
 package com.rozatorii_bulbucasi.savewaste.presentation.ui.splash
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
@@ -23,7 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rozatorii_bulbucasi.savewaste.R
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
-import com.rozatorii_bulbucasi.savewaste.utils.Screens
+import com.rozatorii_bulbucasi.savewaste.data.common.Screens
 import kotlinx.coroutines.delay
 import java.util.*
 

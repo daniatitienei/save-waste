@@ -1,12 +1,9 @@
 package com.rozatorii_bulbucasi.savewaste.domain.use_case.waste_categories
 
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.toLowerCase
 import com.rozatorii_bulbucasi.savewaste.data.remote.dto.toWasteCategory
-import com.rozatorii_bulbucasi.savewaste.domain.enum.WasteType
 import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
 import com.rozatorii_bulbucasi.savewaste.domain.repository.WasteCategoriesRepository
-import com.rozatorii_bulbucasi.savewaste.utils.Resource
+import com.rozatorii_bulbucasi.savewaste.data.common.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException

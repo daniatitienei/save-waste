@@ -1,14 +1,12 @@
 package com.rozatorii_bulbucasi.savewaste.presentation.ui.home
 
+import BottomNavigationBar
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,27 +17,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.rozatorii_bulbucasi.savewaste.R
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.Category
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.OpenableInfoCard
-import com.rozatorii_bulbucasi.savewaste.utils.Screens
-import java.util.*
+import com.rozatorii_bulbucasi.savewaste.data.common.Screens
+import com.rozatorii_bulbucasi.savewaste.presentation.utils.components.TopAppBarWithLogo
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun HomeScreen(navController: NavController) {
-
+fun HomeScreen(
+    navController: NavController,
+) {
     val categoriesRowScrollState = rememberScrollState()
 
     var wasteRecycled by remember {
@@ -54,8 +53,29 @@ fun HomeScreen(navController: NavController) {
         topBar = { TopAppBarWithLogo() },
         bottomBar = {
             BottomNavigationBar(
-                onHomeClick = { /*TODO*/ },
-                onMapsClick = { /*TODO*/ }
+                onHomeClick = {
+                    navController.navigate(Screens.HomeScreenRoute.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+
+                        launchSingleTop = true
+
+                        restoreState = true
+                    }
+                },
+                onMapsClick = {
+                    navController.navigate(Screens.MapsScreenRoute.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+
+                        launchSingleTop = true
+
+                        restoreState = true
+                    }
+                },
+                navController = navController
             )
         },
         floatingActionButton = {
@@ -70,8 +90,6 @@ fun HomeScreen(navController: NavController) {
         floatingActionButtonPosition = FabPosition.Center,
         isFloatingActionButtonDocked = true,
     ) {
-
-
         LazyColumn(
             contentPadding = PaddingValues(
                 start = 20.dp,
@@ -144,14 +162,14 @@ fun HomeScreen(navController: NavController) {
                                     launchSingleTop = true
                                 }
                             },
-                            category = "Hartie"
+                            category = "Hârtie",
                         )
+
                         Spacer(modifier = Modifier.width(15.dp))
                     }
                 }
             }
         }
-
     }
 }
 
@@ -228,70 +246,12 @@ private fun DailyGoalCircularProgressBar(
     }
 }
 
-@Composable
-private fun BottomNavigationBar(
-    onHomeClick: () -> Unit,
-    onMapsClick: () -> Unit
-) {
-    BottomNavigation {
-        BottomNavigationItem(
-            selected = true,
-            onClick = onHomeClick,
-            icon = {
-                Icon(
-                    Icons.Rounded.Home,
-                    contentDescription = stringResource(id = R.string.home)
-                )
-            },
-            selectedContentColor = Green400,
-            unselectedContentColor = Color.LightGray,
-            alwaysShowLabel = true,
-            label = { Text(text = stringResource(id = R.string.home)) }
-        )
-
-        BottomNavigationItem(
-            selected = false,
-            onClick = onMapsClick,
-            icon = {
-                Icon(
-                    Icons.Rounded.LocationOn,
-                    contentDescription = stringResource(id = R.string.maps)
-                )
-            },
-            selectedContentColor = Green400,
-            unselectedContentColor = Color.LightGray,
-        )
-    }
-}
 
 @Composable
 private fun Subtitle(text: String) {
     Text(
         text = text,
         style = MaterialTheme.typography.h6
-    )
-}
-
-@Composable
-private fun TopAppBarWithLogo() {
-    TopAppBar(
-        title = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.recycling_logo),
-                    contentDescription = null,
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = stringResource(id = R.string.app_name)
-                        .uppercase(Locale.getDefault()),
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
     )
 }
 
