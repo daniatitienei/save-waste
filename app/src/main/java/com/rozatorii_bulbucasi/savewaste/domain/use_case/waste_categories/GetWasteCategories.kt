@@ -1,6 +1,9 @@
 package com.rozatorii_bulbucasi.savewaste.domain.use_case.waste_categories
 
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import com.rozatorii_bulbucasi.savewaste.data.remote.dto.toWasteCategory
+import com.rozatorii_bulbucasi.savewaste.domain.enum.WasteType
 import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
 import com.rozatorii_bulbucasi.savewaste.domain.repository.WasteCategoriesRepository
 import com.rozatorii_bulbucasi.savewaste.utils.Resource
@@ -24,7 +27,11 @@ class GetWasteCategories @Inject constructor(
             emit(Resource.Success<List<WasteCategory>>(wasteCategoriesList))
 
         } catch (e: HttpException) {
-            emit(Resource.Error<List<WasteCategory>>(message = e.localizedMessage ?: "An unexpected error occurred."))
+            emit(
+                Resource.Error<List<WasteCategory>>(
+                    message = e.localizedMessage ?: "An unexpected error occurred."
+                )
+            )
         } catch (e: IOException) {
             emit(Resource.Error<List<WasteCategory>>(message = "Check your internet connection."))
         }

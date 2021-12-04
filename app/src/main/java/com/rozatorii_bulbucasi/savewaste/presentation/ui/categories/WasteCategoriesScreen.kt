@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -18,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.rozatorii_bulbucasi.savewaste.R
+import com.rozatorii_bulbucasi.savewaste.domain.enum.WasteType
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.Category
 
@@ -50,18 +52,33 @@ fun WasteCategoriesScreen(
             cells = GridCells.Fixed(2),
             contentPadding = PaddingValues(vertical = 20.dp, horizontal = 20.dp)
         ) {
-            items(state.categories.size) {
+            items(state.categories) {
                 Box(
                     modifier = Modifier.padding(vertical = 15.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Category(
-                        category = state.categories[it].categoryName
-                    ) { /*TODO*/ }
+                        category = it.categoryName,
+                        onClick = { /*TODO*/ },
+                        iconId = getIconIdFromWasteType(it.wasteType)
+                    )
                 }
             }
         }
     }
+}
+
+fun getIconIdFromWasteType(wasteType: WasteType): Int = when(wasteType) {
+    WasteType.GLASS -> R.drawable.ic_glass
+    WasteType.PAPER -> R.drawable.ic_paper
+    WasteType.PLASTIC -> R.drawable.ic_plastic_bottle
+    WasteType.OIL -> R.drawable.ic_oil
+    WasteType.POLYSTYRENE -> R.drawable.ic_polystyrene
+    WasteType.MEDS -> R.drawable.ic_medical_pill
+    WasteType.LIGHT_BULBS -> R.drawable.ic_light_bulb
+    WasteType.FURNITURE -> R.drawable.ic_furniture
+    WasteType.CLOTHES -> R.drawable.ic_clothes
+    WasteType.BATTERIES -> R.drawable.ic_battery
 }
 
 @ExperimentalFoundationApi

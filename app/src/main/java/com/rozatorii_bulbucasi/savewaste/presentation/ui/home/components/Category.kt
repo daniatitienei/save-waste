@@ -27,6 +27,7 @@ import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 fun Category(
     widthModifier: Modifier = Modifier.width(150.dp),
     category: String,
+    iconId: Int = R.drawable.ic_paper,
     onClick: () -> Unit
 ) {
     Column(
@@ -44,9 +45,10 @@ fun Category(
                 .wrapContentSize(align = Alignment.Center)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.ic_paper),
+                painter = painterResource(id = iconId),
                 contentDescription = null,
-                tint = Color.White
+                tint = Color.White,
+                modifier = Modifier.size(70.dp)
             )
         }
 
