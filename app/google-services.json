@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "86241190473",
+    "project_id": "save-waste-23851",
+    "storage_bucket": "save-waste-23851.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86241190473:android:b645647764f81816609598",
+        "android_client_info": {
+          "package_name": "com.rozatorii_bulbucasi.savewaste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86241190473-t04dl7m0mii3beelg1u7j6qotjv9fahu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuk4dqr-6mUXUUelj83mQfMoWrJXJzYAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86241190473-t04dl7m0mii3beelg1u7j6qotjv9fahu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

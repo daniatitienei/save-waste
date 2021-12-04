@@ -32,6 +32,7 @@ import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.Category
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.OpenableInfoCard
+import com.rozatorii_bulbucasi.savewaste.utils.Screens
 import java.util.*
 
 @ExperimentalMaterialApi
@@ -135,7 +136,16 @@ fun HomeScreen(navController: NavController) {
                     modifier = Modifier.horizontalScroll(categoriesRowScrollState)
                 ) {
                     repeat(5) {
-                        Category()
+                        Category(
+                            onClick = {
+                                /* TODO Redirect to the specific waste category */
+
+                                navController.navigate(Screens.WasteCategoriesScreenRoute.route) {
+                                    launchSingleTop = true
+                                }
+                            },
+                            category = "Hartie"
+                        )
                         Spacer(modifier = Modifier.width(15.dp))
                     }
                 }

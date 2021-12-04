@@ -16,9 +16,11 @@ import com.rozatorii_bulbucasi.savewaste.presentation.Navigation
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.splash.SplashScreen
+import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

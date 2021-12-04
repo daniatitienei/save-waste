@@ -17,7 +17,7 @@ import com.rozatorii_bulbucasi.savewaste.utils.Screens
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screens.SplashScreenRoute.route) {
+    NavHost(navController = navController, startDestination = Screens.WasteCategoriesScreenRoute.route) {
         composable(Screens.SplashScreenRoute.route) {
             SplashScreen(navController = navController)
         }

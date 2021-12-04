@@ -25,13 +25,16 @@ import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 
 @Composable
 fun Category(
-    widthModifier: Modifier = Modifier.width(150.dp)
+    widthModifier: Modifier = Modifier.width(150.dp),
+    category: String,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .then(widthModifier)
             .clip(RoundedCornerShape(8.dp))
-            .clickable { }
+            .clickable { onClick() },
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
             modifier = Modifier
@@ -55,7 +58,7 @@ fun Category(
                 .wrapContentWidth(align = Alignment.CenterHorizontally)
         ) {
             Text(
-                text = stringResource(id = R.string.paper),
+                text = category,
                 style = MaterialTheme.typography.h6
             )
         }
@@ -66,6 +69,6 @@ fun Category(
 @Composable
 private fun CategoryPreview() {
     SaveWasteTheme {
-        Category()
+        Category(category = "") {}
     }
 }
