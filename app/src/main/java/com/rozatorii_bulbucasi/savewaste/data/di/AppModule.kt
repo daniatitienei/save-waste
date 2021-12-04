@@ -1,9 +1,9 @@
 package com.rozatorii_bulbucasi.savewaste.data.di
 
-import com.rozatorii_bulbucasi.savewaste.data.remote.WasteCategoriesApi
-import com.rozatorii_bulbucasi.savewaste.data.repository.WasteCategoriesRepositoryImpl
-import com.rozatorii_bulbucasi.savewaste.domain.repository.WasteCategoriesRepository
-import com.rozatorii_bulbucasi.savewaste.data.common.Common
+import com.rozatorii_bulbucasi.savewaste.data.common.Constants
+import com.rozatorii_bulbucasi.savewaste.data.repository.TimisoaraRecyclePointsRepositoryImpl
+import com.rozatorii_bulbucasi.savewaste.domain.remote.TimisoaraRecyclePointsApi
+import com.rozatorii_bulbucasi.savewaste.domain.repository.TimisoaraRecyclePointsRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -21,21 +22,20 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi = Moshi.Builder()
-        .addLast(
-            KotlinJsonAdapterFactory()
-        )
+        .addLast(KotlinJsonAdapterFactory())
         .build()
 
     @Provides
     @Singleton
-    fun provideWasteCategoriesApi(moshi: Moshi): WasteCategoriesApi = Retrofit.Builder()
-        .baseUrl(Common.SAVE_WASTE_API_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .build()
-        .create(WasteCategoriesApi::class.java)
+    fun provideTimisoaraRecyclePointsApi(moshi: Moshi): TimisoaraRecyclePointsApi =
+        Retrofit.Builder()
+            .baseUrl(Constants.TIMISOARA_RECYCLE_API_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+            .create(TimisoaraRecyclePointsApi::class.java)
 
     @Provides
     @Singleton
-    fun provideWasteCategoriesRepository(api: WasteCategoriesApi): WasteCategoriesRepository =
-        WasteCategoriesRepositoryImpl(api)
+    fun provideTimisoaraRecyclePointsRepositoryImpl(api: TimisoaraRecyclePointsApi): TimisoaraRecyclePointsRepository =
+        TimisoaraRecyclePointsRepositoryImpl(api)
 }

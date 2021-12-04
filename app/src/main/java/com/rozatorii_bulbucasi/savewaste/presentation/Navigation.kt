@@ -11,11 +11,14 @@ import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.maps.MapsScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.splash.SplashScreen
 import com.rozatorii_bulbucasi.savewaste.data.common.Screens
+import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
+import com.rozatorii_bulbucasi.savewaste.presentation.ui.inspect_category.InspectCategoryScreen
+import com.squareup.moshi.Moshi
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-fun Navigation() {
+fun Navigation(moshi: Moshi) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screens.SplashScreenRoute.route) {
@@ -28,7 +31,15 @@ fun Navigation() {
         }
 
         composable(Screens.WasteCategoriesScreenRoute.route) {
-            WasteCategoriesScreen(navController = navController)
+            WasteCategoriesScreen(navController = navController, moshi = moshi)
+        }
+
+        composable(Screens.InspectWasteCategoryScreenRoute.route) { backStackEntry ->
+            val categoryJson = backStackEntry.arguments?.getString("category")
+            val jsonAdapter = moshi.adapter(WasteCategory::class.java).lenient()
+            val categoryObject = jsonAdapter.fromJson(categoryJson)
+
+            InspectCategoryScreen(category = categoryObject!!, navController = navController)
         }
 
         composable(Screens.MapsScreenRoute.route) {

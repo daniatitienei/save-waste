@@ -16,12 +16,17 @@ import com.rozatorii_bulbucasi.savewaste.presentation.Navigation
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.splash.SplashScreen
+import com.squareup.moshi.Moshi
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject lateinit var moshi: Moshi
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -35,7 +40,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = true
                     )
 
-                    Navigation()
+                    Navigation(moshi = moshi)
                 }
             }
         }

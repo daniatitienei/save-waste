@@ -52,7 +52,7 @@ val SaveWasteTypography = Typography(
     button = TextStyle(
         fontFamily = LouisGeorgeCafe,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp
+        fontSize = 16.sp
     ),
     caption = TextStyle(
         fontFamily = LouisGeorgeCafe,
