@@ -3,6 +3,7 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Dashboard
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.runtime.Composable
@@ -27,27 +28,6 @@ fun BottomNavigationBar(
 
     BottomNavigation {
         BottomNavigationItem(
-            selected = currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true,
-            onClick = onHomeClick,
-            icon = {
-                Icon(
-                    Icons.Rounded.Home,
-                    contentDescription = stringResource(id = R.string.home)
-                )
-            },
-            selectedContentColor = Green400,
-            unselectedContentColor = Color.LightGray,
-            alwaysShowLabel = currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true,
-            label = {
-                Text(
-                    text = if (currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true)
-                        stringResource(id = R.string.home)
-                    else ""
-                )
-            }
-        )
-
-        BottomNavigationItem(
             selected = currentDestination?.hierarchy?.any { it.route == Screens.MapsScreenRoute.route } == true,
             onClick = onMapsClick,
             icon = {
@@ -63,6 +43,27 @@ fun BottomNavigationBar(
                 Text(
                     text = if (currentDestination?.hierarchy?.any { it.route == Screens.MapsScreenRoute.route } == true)
                         stringResource(id = R.string.maps)
+                    else ""
+                )
+            }
+        )
+
+        BottomNavigationItem(
+            selected = currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true,
+            onClick = onHomeClick,
+            icon = {
+                Icon(
+                    Icons.Rounded.Dashboard,
+                    contentDescription = stringResource(id = R.string.home)
+                )
+            },
+            selectedContentColor = Green400,
+            unselectedContentColor = Color.LightGray,
+            alwaysShowLabel = currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true,
+            label = {
+                Text(
+                    text = if (currentDestination?.hierarchy?.any { it.route == Screens.HomeScreenRoute.route } == true)
+                        stringResource(id = R.string.home)
                     else ""
                 )
             }

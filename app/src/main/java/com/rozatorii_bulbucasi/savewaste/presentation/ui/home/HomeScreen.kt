@@ -77,18 +77,7 @@ fun HomeScreen(
                 },
                 navController = navController
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { wasteRecycled++ }) {
-                Icon(
-                    painterResource(id = R.drawable.ic_recycle),
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.Center,
-        isFloatingActionButtonDocked = true,
+        }
     ) {
         LazyColumn(
             contentPadding = PaddingValues(

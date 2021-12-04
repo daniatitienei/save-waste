@@ -46,7 +46,7 @@ fun SplashScreen(
         )
         delay(500L)
 
-        navController.navigate(Screens.HomeScreenRoute.route) {
+        navController.navigate(Screens.MapsScreenRoute.route) {
             launchSingleTop = true
 
             popUpTo(Screens.SplashScreenRoute.route) {

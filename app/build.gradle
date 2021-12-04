@@ -64,6 +64,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    /* Maps */
+    implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
+    implementation("com.google.maps.android:maps-v3-ktx:2.3.0")
+
     /* Accompanist */
     def accompanistVersion = "0.21.2-beta"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
