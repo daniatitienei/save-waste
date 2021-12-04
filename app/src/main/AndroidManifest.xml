@@ -14,7 +14,7 @@
         android:theme="@style/Theme.SaveWaste">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCoU4aMMYnp5JK9BMHdJmUxD1O_oeJchHA" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
             android:name=".presentation.MainActivity"
