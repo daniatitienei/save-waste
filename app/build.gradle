@@ -62,6 +62,7 @@ dependencies {
     /* Firebase */
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     /* Accompanist */
     def accompanistVersion = "0.21.2-beta"

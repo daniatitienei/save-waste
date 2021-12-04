@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
 import com.rozatorii_bulbucasi.savewaste.domain.use_case.waste_categories.GetWasteCategories
-import com.rozatorii_bulbucasi.savewaste.utils.Resource
+import com.rozatorii_bulbucasi.savewaste.data.common.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

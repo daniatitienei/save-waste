@@ -1,15 +1,16 @@
 package com.rozatorii_bulbucasi.savewaste.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.categories.WasteCategoriesScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
+import com.rozatorii_bulbucasi.savewaste.presentation.ui.maps.MapsScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.splash.SplashScreen
-import com.rozatorii_bulbucasi.savewaste.utils.Screens
+import com.rozatorii_bulbucasi.savewaste.data.common.Screens
 
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
@@ -17,7 +18,7 @@ import com.rozatorii_bulbucasi.savewaste.utils.Screens
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Screens.WasteCategoriesScreenRoute.route) {
+    NavHost(navController = navController, startDestination = Screens.SplashScreenRoute.route) {
         composable(Screens.SplashScreenRoute.route) {
             SplashScreen(navController = navController)
         }
@@ -28,6 +29,10 @@ fun Navigation() {
 
         composable(Screens.WasteCategoriesScreenRoute.route) {
             WasteCategoriesScreen(navController = navController)
+        }
+
+        composable(Screens.MapsScreenRoute.route) {
+            MapsScreen(navController = navController)
         }
     }
 }
