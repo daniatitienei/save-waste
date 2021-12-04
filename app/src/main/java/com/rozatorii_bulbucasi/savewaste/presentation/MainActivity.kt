@@ -1,4 +1,4 @@
-package com.rozatorii_bulbucasi.savewaste
+package com.rozatorii_bulbucasi.savewaste.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

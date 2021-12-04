@@ -11,4 +11,6 @@
     <string name="how_to_separate_the_items_for_recycling_answer">The easiest way to separate/prepare your recyclable items is to try and handle things as soon as possible. Set up space in your house where you are going to compile your different plastic and paper-based recyclables, and as soon as you come across something that fits the bill, move it over.</string>
     <string name="categories">Categories</string>
     <string name="paper">Paper</string>
+    <string name="daily_goal">The daily goal is to recycle at least once a day</string>
+    <string name="times">times</string>
 </resources>

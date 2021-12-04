@@ -24,10 +24,12 @@ import com.rozatorii_bulbucasi.savewaste.R
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 
 @Composable
-fun Category() {
+fun Category(
+    widthModifier: Modifier = Modifier.width(150.dp)
+) {
     Column(
         modifier = Modifier
-            .width(150.dp)
+            .then(widthModifier)
             .clip(RoundedCornerShape(8.dp))
             .clickable { }
     ) {

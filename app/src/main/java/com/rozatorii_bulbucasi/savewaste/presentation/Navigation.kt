@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.rozatorii_bulbucasi.savewaste.presentation.ui.categories.WasteCategoriesScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.splash.SplashScreen
 import com.rozatorii_bulbucasi.savewaste.utils.Screens
@@ -22,7 +23,11 @@ fun Navigation() {
         }
 
         composable(Screens.HomeScreenRoute.route) {
-            HomeScreen()
+            HomeScreen(navController = navController)
+        }
+
+        composable(Screens.WasteCategoriesScreenRoute.route) {
+            WasteCategoriesScreen(navController = navController)
         }
     }
 }

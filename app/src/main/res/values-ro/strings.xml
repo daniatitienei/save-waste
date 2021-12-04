@@ -11,4 +11,6 @@
     <string name="how_to_separate_the_items_for_recycling_answer">Cel mai simplu mod de a vă separa/pregăti articolele reciclabile este să încercați să gestionați lucrurile cât mai curând posibil. Pregătiți spațiu în casa dvs. unde veți compila diferitele materiale reciclabile pe bază de plastic și hârtie și, de îndată ce găsiți ceva care se potrivește, mutați-l.</string>
     <string name="categories">Categorii</string>
     <string name="paper">Hârtie</string>
+    <string name="daily_goal">Scopul zilnic este de a recicla minim 1 dată pe zi</string>
+    <string name="times">ori</string>
 </resources>
