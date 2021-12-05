@@ -1,6 +1,5 @@
 package com.rozatorii_bulbucasi.savewaste.domain.remote.dto
 
-import com.google.gson.annotations.SerializedName
 import com.rozatorii_bulbucasi.savewaste.domain.model.RecyclePoint
 import com.squareup.moshi.Json
 
@@ -19,8 +18,8 @@ data class RecyclePointDto(
 
 fun RecyclePointDto.toRecyclePoint(): RecyclePoint = RecyclePoint(
     id = _id,
-    tipColectare = tipColectare ?: "",
-    adresa = adresa,
-    latitudine = latitudine.toDouble(),
-    longitudine = longitudine.toDouble()
+    collectionType = tipColectare ?: "",
+    address = adresa,
+    latitude = latitudine.toDouble(),
+    longitude = longitudine.toDouble(),
 )

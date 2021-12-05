@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.rozatorii_bulbucasi.savewaste.presentation.Navigation
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
@@ -20,6 +21,7 @@ import com.squareup.moshi.Moshi
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@ExperimentalPermissionsApi
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @AndroidEntryPoint

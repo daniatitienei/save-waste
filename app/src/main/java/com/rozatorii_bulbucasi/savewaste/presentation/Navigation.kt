@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.categories.WasteCategoriesScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.HomeScreen
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.maps.MapsScreen
@@ -15,6 +16,7 @@ import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.inspect_category.InspectCategoryScreen
 import com.squareup.moshi.Moshi
 
+@ExperimentalPermissionsApi
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
