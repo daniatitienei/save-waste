@@ -73,6 +73,13 @@ dependencies {
     implementation("com.google.android.libraries.maps:maps:3.1.0-beta")
     implementation("com.google.maps.android:maps-v3-ktx:2.3.0")
 
+    /* Room */
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
     /* Accompanist */
     def accompanistVersion = "0.21.2-beta"
     implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
@@ -106,6 +113,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'

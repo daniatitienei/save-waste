@@ -9,6 +9,19 @@ object Constants {
 
     const val TIMISOARA_RECYCLE_API_BASE_URL = "https://data.primariatm.ro/api/3/action/"
 
+    val allWasteCategoriesTitle = listOf(
+        "sticlă",
+        "baterii",
+        "haine",
+        "deșeuri voluminoase",
+        "becuri",
+        "medicamente",
+        "ulei",
+        "hârtie",
+        "pet",
+        "polistiren"
+    )
+
     val allWasteCategories = listOf<WasteCategory>(
         WasteCategory(
             nameId = R.string.glass,
@@ -103,7 +116,6 @@ object Constants {
                 R.string.plastic_advantage_2,
                 R.string.plastic_advantage_3,
                 R.string.plastic_advantage_4,
-                R.string.plastic_advantage_5,
             )
         ),
 

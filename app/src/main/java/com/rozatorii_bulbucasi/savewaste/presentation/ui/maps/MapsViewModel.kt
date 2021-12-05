@@ -10,21 +10,19 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import androidx.lifecycle.viewModelScope
 import com.rozatorii_bulbucasi.savewaste.data.common.Resource
+import com.rozatorii_bulbucasi.savewaste.domain.use_case.timisoara_recycle_points_use_cases.RecyclePointsUseCases
 import kotlin.coroutines.coroutineContext
 
 @HiltViewModel
 class MapsViewModel @Inject constructor(
-    private val getRecyclePointsUseCase: GetRecyclePoints
-): ViewModel() {
+    private val useCases: RecyclePointsUseCases
+) : ViewModel() {
     private val _state = mutableStateOf(RecyclePointsState())
     val state: State<RecyclePointsState> = _state
 
-    init {
-        getRecyclePoints()
-    }
+    fun getRecyclePoints() {
 
-    private fun getRecyclePoints() {
-        getRecyclePointsUseCase().onEach { result ->
+        useCases.getRecyclePoints().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = _state.value.copy(data = result.data!!, isLoading = false)
@@ -40,4 +38,25 @@ class MapsViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    fun getACategoryOfRecyclePoints(categoryName: String) {
+
+        useCases.getACategoryOfRecyclePoints(categoryName).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    _state.value = _state.value.copy(data = result.data!!, isLoading = false)
+                }
+
+                is Resource.Loading -> {
+                    _state.value = _state.value.copy(isLoading = true)
+                }
+
+                is Resource.Error -> {
+                    _state.value = _state.value.copy(error = result.message)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+
 }

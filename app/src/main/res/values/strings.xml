@@ -53,7 +53,6 @@
     <string name="plastic_advantage_2">2.\tRequires Less Energy and Helps Conserve Natural Resources</string>
     <string name="plastic_advantage_3">3.\tSaves Fast-depleting Landfill Space</string>
     <string name="plastic_advantage_4">4.\tEases the Demand on Fossil Fuel Consumption</string>
-    <string name="plastic_advantage_5">5.\tPromotes a Sustainable Lifestyle</string>
     <string name="polystyrene">Polystyrene</string>
     <string name="polystyrene_advantage_1">1.\tWaste Reduction, probably the most obvious solution. By carefully recycling polystyrene, the amount going to landfill and ending up in the sea is reduced; as long as this is done properly.</string>
     <string name="polystyrene_advantage_2">2.\tVolume Reduction, not only can some polystyrene compactors compact up to 220kg of polystyrene every hour, but the material is also reduced in size by around 95% every time.</string>
@@ -62,4 +61,5 @@
     <string name="polystyrene_advantage_5">5.\tAdditional Revenue Stream, because there’s a market ready and waiting for polystyrene blocks, this makes the perfect additional revenue stream for a business. You can read more about making money from your used polystyrene here.</string>
     <string name="advantages">Advantages</string>
     <string name="collection_points_on_map">COLLECTION POINTS ON MAP</string>
+    <string name="all">Toate</string>
 </resources>

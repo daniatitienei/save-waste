@@ -7,6 +7,8 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
@@ -32,22 +35,26 @@ import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.Categor
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.OpenableInfoCard
 import com.rozatorii_bulbucasi.savewaste.data.common.Screens
 import com.rozatorii_bulbucasi.savewaste.presentation.utils.components.TopAppBarWithLogo
+import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 fun HomeScreen(
     navController: NavController,
+    dashboardViewModel: DashboardViewModel = hiltViewModel()
 ) {
     val categoriesRowScrollState = rememberScrollState()
 
     var wasteRecycled by remember {
-        mutableStateOf(0)
+        mutableStateOf(dashboardViewModel.state.value)
     }
 
     val animationPlayed by remember {
         mutableStateOf(true)
     }
+
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         topBar = { TopAppBarWithLogo() },
@@ -77,7 +84,7 @@ fun HomeScreen(
                 },
                 navController = navController
             )
-        }
+        },
     ) {
         LazyColumn(
             contentPadding = PaddingValues(

@@ -2,23 +2,28 @@ package com.rozatorii_bulbucasi.savewaste.presentation.ui.maps
 
 import BottomNavigationBar
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.IntentSender
 import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -27,7 +32,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionRequired
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -37,17 +41,20 @@ import com.google.android.libraries.maps.MapView
 import com.google.android.libraries.maps.model.BitmapDescriptorFactory
 import com.google.android.libraries.maps.model.LatLng
 import com.google.android.libraries.maps.model.MarkerOptions
-import com.rozatorii_bulbucasi.savewaste.data.common.Screens
-import com.rozatorii_bulbucasi.savewaste.presentation.utils.components.TopAppBarWithLogo
-import com.google.maps.android.ktx.R
 import com.google.maps.android.ktx.awaitMap
-import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
+import com.rozatorii_bulbucasi.savewaste.R
+import com.rozatorii_bulbucasi.savewaste.data.common.Constants
+import com.rozatorii_bulbucasi.savewaste.data.common.Screens
+import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
+import com.rozatorii_bulbucasi.savewaste.presentation.theme.*
+import com.rozatorii_bulbucasi.savewaste.presentation.ui.maps.components.WasteCategoryToggle
+import com.rozatorii_bulbucasi.savewaste.presentation.utils.components.TopAppBarWithLogo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.*
 
+@SuppressLint("MissingPermission")
 @ExperimentalPermissionsApi
 @Composable
 fun MapsScreen(
@@ -57,6 +64,13 @@ fun MapsScreen(
     val mapView = rememberMapViewWithLifecycle()
 
     val state = mapsViewModel.state.value
+
+    var selectedCategory by remember { mutableStateOf(R.string.all) }
+    val scrollState = rememberScrollState()
+
+    LaunchedEffect(key1 = true) {
+        mapsViewModel.getRecyclePoints()
+    }
 
     val locationPermission =
         rememberPermissionState(permission = Manifest.permission.ACCESS_FINE_LOCATION)
@@ -101,6 +115,10 @@ fun MapsScreen(
                 }
             )
         }
+    }
+
+    var city by remember {
+        mutableStateOf(LatLng(45.7498856, 21.2052476))
     }
 
     if (state.isLoading)
@@ -148,9 +166,13 @@ fun MapsScreen(
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                AndroidView({ mapView }) { mapView ->
+                AndroidView(
+                    { mapView }, modifier = Modifier.weight(0.6f)
+                ) { mapView ->
                     CoroutineScope(Dispatchers.Main).launch {
                         val map = mapView.awaitMap()
+
+                        map.clear()
 
                         map.uiSettings.isZoomControlsEnabled = true
                         map.uiSettings.isTiltGesturesEnabled = false
@@ -158,8 +180,12 @@ fun MapsScreen(
                         map.uiSettings.isMyLocationButtonEnabled = isLocationEnabled
                         map.isMyLocationEnabled = isLocationEnabled
 
-                        val city = LatLng(45.7498856, 21.2052476)
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 15f))
+                        fusedLocationClient.lastLocation
+                            .addOnSuccessListener { location: Location? ->
+                                city = location?.latitude?.let { LatLng(it, location.longitude) }!!
+                            }
+
+                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(city, 14f))
 
                         repeat(state.data.size) {
                             val currentRecyclePoint =
@@ -187,13 +213,41 @@ fun MapsScreen(
                         }
                     }
                 }
+                Column(
+                    modifier = Modifier
+                        .weight(0.4f)
+                        .verticalScroll(scrollState)
+                ) {
+                    WasteCategoryToggle(
+                        wasteCategory = WasteCategory(R.string.all),
+                        selectedCategory = stringResource(id = selectedCategory),
+                        onClick = { category ->
+                            selectedCategory = category
+                            mapsViewModel.getRecyclePoints()
+                        },
+                        color = Green200
+                    )
 
+                    repeat(Constants.allWasteCategories.size) {
+                        WasteCategoryToggle(
+                            wasteCategory = Constants.allWasteCategories[it],
+                            selectedCategory = stringResource(id = selectedCategory),
+                            onClick = { category ->
+                                selectedCategory = category
+                                mapsViewModel.getACategoryOfRecyclePoints(
+                                    getQueryForHttpRequest(selectedCategory)
+                                )
+                            },
+                            color = getColorByCategory(Constants.allWasteCategories[it].nameId)
+                        )
+                    }
+                }
             }
         }
 }
 
 @Composable
-fun rememberMapViewWithLifecycle(): MapView {
+private fun rememberMapViewWithLifecycle(): MapView {
     val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
@@ -215,7 +269,7 @@ fun rememberMapViewWithLifecycle(): MapView {
 }
 
 @Composable
-fun rememberMapLifecycleObserver(mapView: MapView): LifecycleObserver = remember(mapView) {
+private fun rememberMapLifecycleObserver(mapView: MapView): LifecycleObserver = remember(mapView) {
     LifecycleEventObserver { _, event ->
         when (event) {
             Lifecycle.Event.ON_CREATE -> mapView.onCreate(Bundle())
@@ -227,6 +281,30 @@ fun rememberMapLifecycleObserver(mapView: MapView): LifecycleObserver = remember
             else -> throw IllegalStateException()
         }
     }
+}
+
+private fun getQueryForHttpRequest(category: Int): String = when (category) {
+    R.string.glass -> "sticlă"
+    R.string.batteries -> "baterii"
+    R.string.clothes -> "haine"
+    R.string.furniture -> "deșeuri voluminoase"
+    R.string.light_bulbs -> "becuri"
+    R.string.meds -> "medicamente"
+    R.string.oil -> "ulei utilizat"
+    R.string.plastic -> "pet"
+    else -> "polistiren"
+}
+
+private fun getColorByCategory(category: Int): Color = when (category) {
+    R.string.glass -> Color.Green
+    R.string.batteries -> Orange
+    R.string.clothes -> Color.Red
+    R.string.furniture -> Purple600
+    R.string.light_bulbs -> Color.Cyan
+    R.string.meds -> Green500
+    R.string.oil -> Color.Yellow
+    R.string.plastic -> Color.Blue
+    else -> Rose
 }
 
 private fun checkLocationSetting(
