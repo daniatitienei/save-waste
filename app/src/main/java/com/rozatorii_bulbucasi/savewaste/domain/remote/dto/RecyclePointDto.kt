@@ -4,7 +4,7 @@ import com.rozatorii_bulbucasi.savewaste.domain.model.RecyclePoint
 import com.squareup.moshi.Json
 
 data class RecyclePointDto(
-    val _full_text: String,
+    val _full_text: String?,
     val _id: Int,
     val adresa: String,
     val companie: String,

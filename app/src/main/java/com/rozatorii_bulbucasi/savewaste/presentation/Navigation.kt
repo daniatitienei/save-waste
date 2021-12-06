@@ -29,7 +29,7 @@ fun Navigation(moshi: Moshi) {
         }
 
         composable(Screens.HomeScreenRoute.route) {
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, moshi = moshi)
         }
 
         composable(Screens.WasteCategoriesScreenRoute.route) {

@@ -1,6 +1,7 @@
 package com.rozatorii_bulbucasi.savewaste.presentation.ui.home
 
 import BottomNavigationBar
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -13,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -22,32 +22,47 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.rozatorii_bulbucasi.savewaste.R
+import com.rozatorii_bulbucasi.savewaste.data.common.Constants
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.Green400
 import com.rozatorii_bulbucasi.savewaste.presentation.theme.SaveWasteTheme
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.Category
 import com.rozatorii_bulbucasi.savewaste.presentation.ui.home.components.OpenableInfoCard
 import com.rozatorii_bulbucasi.savewaste.data.common.Screens
+import com.rozatorii_bulbucasi.savewaste.domain.model.WasteCategory
+import com.rozatorii_bulbucasi.savewaste.presentation.utils.CounterViewModel
 import com.rozatorii_bulbucasi.savewaste.presentation.utils.components.TopAppBarWithLogo
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.util.*
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 fun HomeScreen(
     navController: NavController,
+    counterViewModel: CounterViewModel = hiltViewModel(),
+    moshi: Moshi
 ) {
     val categoriesRowScrollState = rememberScrollState()
 
     var wasteRecycled by remember {
-        mutableStateOf(0)
+        mutableStateOf(counterViewModel.state.value)
     }
 
     val animationPlayed by remember {
         mutableStateOf(true)
     }
+
+    val scope = rememberCoroutineScope()
+
+    val jsonAdapter = moshi.adapter(WasteCategory::class.java).lenient()
+
+    Log.d("appDebug", Calendar.getInstance().time.toString())
 
     Scaffold(
         topBar = { TopAppBarWithLogo() },
@@ -77,84 +92,104 @@ fun HomeScreen(
                 },
                 navController = navController
             )
-        }
-    ) {
-        LazyColumn(
-            contentPadding = PaddingValues(
-                start = 20.dp,
-                end = 20.dp,
-                bottom = 70.dp,
-                top = 20.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(25.dp),
-        ) {
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(align = Alignment.CenterHorizontally)
-                ) {
-                    DailyGoalCircularProgressBar(
-                        percentage = if (wasteRecycled == 0) 0f else 1f,
-                        number = 100,
-                        numberOfWasteRecycled = wasteRecycled,
-                        animationPlayed = animationPlayed
+        },
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+
+            LazyColumn(
+                contentPadding = PaddingValues(
+                    horizontal = 20.dp,
+                    vertical = 20.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(25.dp),
+            ) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(align = Alignment.CenterHorizontally)
+                    ) {
+                        DailyGoalCircularProgressBar(
+                            percentage = if (wasteRecycled == 0) 0f else 1f,
+                            number = 100,
+                            numberOfWasteRecycled = wasteRecycled,
+                            animationPlayed = animationPlayed
+                        )
+                    }
+                }
+
+                item {
+                    Text(
+                        text = buildAnnotatedString {
+                            append(stringResource(id = R.string.total_waste_recycled_by_our_users))
+                            withStyle(style = SpanStyle(color = Green400)) {
+                                append(text = " 120 ${stringResource(id = R.string.waste)}")
+                            }
+                        },
+                        style = MaterialTheme.typography.h6,
+                        textAlign = TextAlign.Center
                     )
                 }
-            }
 
-            item {
-                Text(
-                    text = buildAnnotatedString {
-                        append(stringResource(id = R.string.total_waste_recycled_by_our_users))
-                        withStyle(style = SpanStyle(color = Green400)) {
-                            append(text = " 120 ${stringResource(id = R.string.waste)}")
+                item {
+                    Subtitle(text = stringResource(id = R.string.faq))
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OpenableInfoCard(
+                        question = stringResource(id = R.string.why_you_should_recycle_question),
+                        answer = stringResource(id = R.string.why_you_should_recycle_answer)
+                    )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    OpenableInfoCard(
+                        question = stringResource(id = R.string.how_to_separate_the_items_for_recycling_question),
+                        answer = stringResource(id = R.string.how_to_separate_the_items_for_recycling_answer)
+                    )
+                }
+
+                item {
+                    Subtitle(text = stringResource(id = R.string.categories))
+
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Row(
+                        modifier = Modifier.horizontalScroll(categoriesRowScrollState)
+                    ) {
+                        repeat(5) {
+                            Category(
+                                onClick = {
+
+                                    val categoryJson =
+                                        jsonAdapter.toJson(Constants.allWasteCategories[it])
+
+                                    navController.navigate(
+                                        Screens.InspectWasteCategoryScreenRoute.route.replace(
+                                            "{category}",
+                                            categoryJson
+                                        )
+                                    ) {
+                                        launchSingleTop = true
+                                    }
+                                },
+                                category = stringResource(id = Constants.allWasteCategories[it].nameId),
+                                iconId = Constants.allWasteCategories[it].iconId
+                            )
+
+                            Spacer(modifier = Modifier.width(15.dp))
                         }
-                    },
-                    style = MaterialTheme.typography.h6,
-                    textAlign = TextAlign.Center
-                )
-            }
 
-            item {
-                Subtitle(text = stringResource(id = R.string.faq))
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                OpenableInfoCard(
-                    question = stringResource(id = R.string.why_you_should_recycle_question),
-                    answer = stringResource(id = R.string.why_you_should_recycle_answer)
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                OpenableInfoCard(
-                    question = stringResource(id = R.string.how_to_separate_the_items_for_recycling_question),
-                    answer = stringResource(id = R.string.how_to_separate_the_items_for_recycling_answer)
-                )
-            }
-
-            item {
-                Subtitle(text = stringResource(id = R.string.categories))
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Row(
-                    modifier = Modifier.horizontalScroll(categoriesRowScrollState)
-                ) {
-                    repeat(5) {
                         Category(
                             onClick = {
-                                /* TODO Redirect to the specific waste category */
 
                                 navController.navigate(Screens.WasteCategoriesScreenRoute.route) {
                                     launchSingleTop = true
                                 }
                             },
-                            category = "Hârtie",
+                            category = stringResource(id = R.string.all),
+                            iconId = R.drawable.ic_category
                         )
-
-                        Spacer(modifier = Modifier.width(15.dp))
                     }
                 }
             }
@@ -250,6 +285,10 @@ private fun Subtitle(text: String) {
 @Composable
 private fun HomePreview() {
     SaveWasteTheme {
-        HomeScreen(navController = rememberNavController())
+        HomeScreen(
+            navController = rememberNavController(), moshi = Moshi.Builder().add(
+                KotlinJsonAdapterFactory()
+            ).build()
+        )
     }
 }
