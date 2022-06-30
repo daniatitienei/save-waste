@@ -12,6 +12,9 @@ Save waste is an application created for [UniHack][1] which it's catered towards
 * Kotlin
 * Jetpack Compose
 * Material Design 2
+* Flow
+* Google Maps
+* Location
 * Dagger Hilt 
 * Coroutines
 * Navigation
